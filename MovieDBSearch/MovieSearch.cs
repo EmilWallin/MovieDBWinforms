@@ -10,6 +10,8 @@ namespace MovieDBSearch
     internal class MovieSearch
     {
         private HttpClient client = new HttpClient();
+
+        //Search movie by id
         public async Task<Movie> SearchById(int id)
         {
             DotNetEnv.Env.TraversePath().Load();
@@ -33,6 +35,7 @@ namespace MovieDBSearch
             return null;
         }
 
+        //Search movie by title
         public async Task<SearchResult> SearchByTitle(string title)
         {
             DotNetEnv.Env.TraversePath().Load();
@@ -56,7 +59,7 @@ namespace MovieDBSearch
             return null;
         }
 
-
+        //Gets list of genres
         public async Task<GenreResult> FetchGenres()
         {
             DotNetEnv.Env.TraversePath().Load();

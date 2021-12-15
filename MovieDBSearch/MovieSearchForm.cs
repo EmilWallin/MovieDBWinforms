@@ -2,9 +2,11 @@ namespace MovieDBSearch
 {
     public partial class formMovieSearch : Form
     {
+        //Search object and timer
         private MovieSearch mSearch = new MovieSearch();
         private System.Windows.Forms.Timer? timer;
 
+        //Searchsafes
         private bool isEditingText = false;
         private string prevSearch = "";
 
@@ -13,6 +15,7 @@ namespace MovieDBSearch
         private SearchResult? currentResult;
         private GenreResult genres = new();
 
+        //Current homepage url (as string because Process.Start wants string)
         private string? currentHomepage = "";
 
         public formMovieSearch()
@@ -29,18 +32,22 @@ namespace MovieDBSearch
             timer.Tick += new EventHandler(SearchMovies);
         }
 
+        //Gets genres and fillls genres field
         private async void FetchGenres()
         {
             var res = await mSearch.FetchGenres();
             genres = res;
         }
 
+
         #region Movie Search Logic
+        //Search movie when radiobox is changed
         private void radioTitle_CheckedChanged(object sender, EventArgs e)
         {
             SearchMovies(sender, e);
         }
-        //Text search changed. Checks for empy text and calls appropriate methods
+
+        //Text search changed. Checks for empty text and calls appropriate methods
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             isEditingText = true;
@@ -68,7 +75,6 @@ namespace MovieDBSearch
         private async void SearchMovies(Object obj, EventArgs e)
         {
             timer.Stop();
-
             movieList.Clear();
             currentResult = null;
 
@@ -105,26 +111,34 @@ namespace MovieDBSearch
         }
         #endregion
 
-        //On index change
+
+        //On index change => update info
         private async void listBoxResults_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (movieList.Count <= 0) return;
-
-            if (listBoxResults.SelectedIndex != -1)
+            if (listBoxResults.SelectedIndex != -1 && movieList.Count > 0)
                 await FillInfoBox(movieList[listBoxResults.SelectedIndex]);
         }
 
-        //Fills infobox with info and picture
+        //When Homepagelink is clicked
+        private void linkHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(currentHomepage))
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(currentHomepage) { UseShellExecute = true });
+        }
+
+        //Fills infobox with info and picture - bigboy method but it's mostly label.text =...
         private async Task FillInfoBox(Movie movie)
         {
+            //Init and always-available fields
             lblTitle.Text = movie.Title;
+            lblRelease.Text = $"Release Date: {movie.Release_Date}";
             lblRating.Text = $"Rating: {movie.Vote_Average}";
             lblRelease.Text = "Release Date:";
+            lblRuntime.Text = $"Runtime: {TimeConvert.MinutesToTimeString(movie.Runtime)}";
             textBoxSynopsis.Text = movie.Overview;
+            lblLanguage.Text = $"Original Language: {movie.Original_Language.ToUpper()}";
 
-            if (!string.IsNullOrEmpty(movie.Release_Date))
-                lblRelease.Text = $"Release Date: {movie.Release_Date}";
-
+            //Genre info
             lblGenre.Text = "";
             if (movie.Genres != null)
             {
@@ -143,6 +157,7 @@ namespace MovieDBSearch
                 }
             }
 
+            //Homepage link
             if (string.IsNullOrEmpty(movie.Homepage))
             {
                 currentHomepage = "";
@@ -154,10 +169,7 @@ namespace MovieDBSearch
                 linkHomepage.Text = "Homepage";
             }
 
-            lblRuntime.Text = $"Runtime: {TimeConvert.MinutesToTimeString(movie.Runtime)}";
-
-            lblLanguage.Text = $"Original Language: {movie.Original_Language.ToUpper()}";
-
+            //Load picture
             try
             {
                 if (picturePoster.Image != null)
@@ -177,14 +189,6 @@ namespace MovieDBSearch
             {
                 labelNoImage.Text = "No Image";
             }
-        }
-
-
-        //When Homepagelink is clicked
-        private void linkHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            if(!string.IsNullOrEmpty(currentHomepage))
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(currentHomepage) { UseShellExecute = true });
         }
     }
 }

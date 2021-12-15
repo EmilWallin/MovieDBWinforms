@@ -19,7 +19,7 @@ namespace MovieDBSearch
         public string Title { get; set; }
         public float Vote_Average { get; set; }
 
-
+        //Gets short infostring
         public override string ToString()
         {
             string releaseYear = string.IsNullOrEmpty(this.Release_Date) ? "Unknown" : this.Release_Date.Substring(0, 4);
