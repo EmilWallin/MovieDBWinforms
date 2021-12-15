@@ -4,7 +4,6 @@
     <a href="https://www.themoviedb.org/" >
         <img class="imgR" id="tmdbLogo" alt="TMDB logo should be here" title="To TMDB" src=https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg />
     </a>
-    
     <p class="textL" id="textL2">It also uses Newtonsoft's Json.net-library:</p>
     <a href="https://www.newtonsoft.com/json">
         <img class="imgR" id="newtonsoftLogo" alt="Newtonsoft logo should be here" title="To Netwonsoft" src=https://www.nuget.org/profiles/newtonsoft/avatar?imageSize=512 />
@@ -13,11 +12,9 @@
     <a href="https://github.com/bolorundurowb/dotenv.net">
         <img class="imgR" id="githubLogo" alt="Github logo should be here" title="To dotenv Github Repo" src=https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png />
     </a>
-    
     <p class="textBox" id="textInstructions">To open project: .env file in root folder with your tmdb apikey as "APIKEY"</p>
     <p class="textBox" id="textBot">Created by me as part of a programming course at Handelsakademin in Gothenburg.</p>
 </body>
-
 <style>
     h2 {
         text-align: center;
@@ -48,7 +45,6 @@
     #textL3 {
         top: 470px;
     }
-    
     .imgR {
         position: absolute;
         display: inline-block;
@@ -69,7 +65,6 @@
         left: 57%;
         width: 160px;
     }
-    
     .textBox {
         position: fixed;
         display: inline-block;
