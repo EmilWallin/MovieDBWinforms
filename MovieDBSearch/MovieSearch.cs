@@ -27,10 +27,10 @@ namespace MovieDBSearch
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Någonting gick fel.", "Ingen kontakt med server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
 
-            return movie;
+            return null;
         }
 
         public async Task<SearchResult> SearchByTitle(string title)
@@ -38,7 +38,7 @@ namespace MovieDBSearch
             DotNetEnv.Env.TraversePath().Load();
             string key = Environment.GetEnvironmentVariable("APIKEY");
             string uri = $"https://api.themoviedb.org/3/search/movie?api_key={key}&query={title}";
-            SearchResult results = new SearchResult();
+            SearchResult results = new();
 
             try
             {
@@ -50,10 +50,31 @@ namespace MovieDBSearch
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ingen kontakt med server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
 
-            return results;
+            return null;
+        }
+
+
+        public async Task<GenreResult> FetchGenres()
+        {
+            DotNetEnv.Env.TraversePath().Load();
+            string key = Environment.GetEnvironmentVariable("APIKEY");
+            string uri = $"https://api.themoviedb.org/3/genre/movie/list?api_key={key}";
+            
+            try
+            {
+                var response = await client.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
+                var jsonData = await response.Content.ReadAsStringAsync();
+                GenreResult genres = JsonConvert.DeserializeObject<GenreResult>(jsonData);
+                return genres;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
     }
 }
