@@ -8,6 +8,7 @@ namespace MovieDBSearch
 {
     internal static class TimeConvert
     {
+        //Converts total minutes to string of hours and minutes
         public static string MinutesToTimeString(int min)
         {
             int hr = min / 60;
