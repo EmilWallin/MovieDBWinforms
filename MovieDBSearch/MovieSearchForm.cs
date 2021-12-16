@@ -108,6 +108,9 @@ namespace MovieDBSearch
                 listBoxResults.Items.AddRange(movieList.Select(m => m.ToString()).ToArray());
             else
                 listBoxResults.Items.Add("No movies found.");
+
+            if (movieList.Count == 1)               //Fills info box directly if there is only one result (aka searched by id)
+                FillInfoBox(movieList[0]);
         }
         #endregion
 
