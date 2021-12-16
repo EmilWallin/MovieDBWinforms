@@ -3,6 +3,8 @@ This is a movie search program in winforms
 
 Created by me as part of a programming course at Handelsakademin in Gothenburg.
 
+The program allows searching for movies by their id in the TMDB database or by title.
+
 ### API and NuGet packages
 ---
 [<img alt="TMDB logo" title="Click me" src=https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg width=100 />](https://www.themoviedb.org/)
